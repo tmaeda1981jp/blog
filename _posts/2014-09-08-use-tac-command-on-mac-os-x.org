@@ -1,0 +1,22 @@
+#+LAYOUT: post
+#+TITLE: macでtacコマンドを使う
+#+DATE: 2014-09-08
+#+TAGS: mac
+
+ファイルの内容を末尾の方から一行ずつ出力するコマンド．catの逆だからtac．
+
+* coreutilsをインストールする
+
+tacコマンドはcoreutilsに含まれるのでこれをインストールする．
+
+#+BEGIN_SRC bash
+$ brew install coreutils
+#+END_SRC
+
+* PATHを通す
+
+homebrewでインストールすると， =/usr/local/opt/coreutils/libexec/gnubin= 配下にインストールされるので，ここにPATHを通す．
+
+#+BEGIN_SRC bash
+export PATH=$PATH:/usr/local/opt.coreutils/libexec/gnubin
+#+END_SRC

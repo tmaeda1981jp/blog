@@ -1,0 +1,32 @@
+#+LAYOUT: post
+#+TITLE: Vagrantの共有フォルダ上にphpがsession用のファイルを作成できない問題
+#+DATE: 2014-08-19
+#+TAGS: vagrant
+
+* こんな状況
+
+- =synced_folder= を使ってホスト/ゲスト間でファイル共有している．
+- 共有ファイルの一部を =DocumentRoot= 配下にシンボリックリンクとして置いている．
+- この共有ファイルはPHPのアプリケーションで，session情報をファイルに書き込む処理を行っている．
+- 書き込むファイルはPHPアプリケーション内に含まれている．
+
+#+BEGIN_SRC bash
+/synced
+  php-applications/ (共有しているPHPアプリケーション)
+/htdocs (Document Root)
+  php-applications/ (↑のsymbolic link)
+    tmp/sessions (sessionを書き込むところ)
+#+END_SRC
+
+synced配下のphp-applicationsをシンボリックリンクじゃなくて普通にコピーだとsessionを書き込むことができた．つまり，共有ファイルをDocumentRoot配下に置くというのがダメだったらしい．ちなみにハードリンクしようとしたら「無効なクロスデバイスリンクです」というエラーがでてうまくいかなかった．マウントされているdisk/partitionが異なる場合にでるらしい．symbolic linkで上手くsession情報が書き込めないのもそのあたりが原因なんだろうか？
+
+* 解決方法
+
+今考えている解決方法としてはrsyncを使って同期させる方法．ホスト→ゲストで共有するやり方が一般的みたい．
+ということで， =DocumentRoot= 配下に/sharedのファイルをrsyncするような形にしようかなと思っているのだけれど，わざわざ =vagrant rsync-auto= みたいなコマンドを叩いておかないと同期しないらしいので，そのあたり一手間増えるのが面倒だし， =VMware Fusion= を使っている今現在の環境ではそういうことをしなくても良いので，微妙なところ．
+
+* 使っているバージョン
+
+Mac OS X用の現時点での最新版
+
+- Vagrant: 1.6.3

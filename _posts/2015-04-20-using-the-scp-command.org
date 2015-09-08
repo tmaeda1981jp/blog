@@ -1,0 +1,18 @@
+#+LAYOUT: post
+#+TITLE: SCPコマンドの使い方
+#+DATE: 2015-04-20
+#+TAGS: scp
+
+いつも使い方を忘れて調べている気がするのでメモ。
+
+* 送信
+
+#+BEGIN_SRC bash
+$ scp -P <port> <localfile> <username>@<hostname>:<remotefile>
+#+END_SRC
+
+* 受信
+
+#+BEGIN_SRC bash
+$ scp -P <port> <username>@<hostname>:<remotefile> <localfile>
+#+END_SRC

@@ -1,0 +1,24 @@
+#+LAYOUT: post
+#+TITLE: EPELのインストール
+#+DATE: 2014-08-08
+#+TAGS: centos epel
+
+* EPELとは
+
+=CentOS= はディストリビューションのポリシーとして枯れた技術しか使わないというのがあって，デフォルトで含まれているパッケージがかなり古かったりする．例えばPythonは未だ2.6系...困ることが多いので， =EPEL= リポジトリを追加して，新しいパッケージを利用できるようにする．
+
+ちなみに， =EPEL= というのは =Extra Packages for Enterprise Linux= の略称．
+
+** 参考
+
+- https://fedoraproject.org/wiki/EPEL/ja
+
+* EPELのインストール
+
+#+BEGIN_SRC bash
+$ sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm を取得中
+警告: /var/tmp/rpm-tmp.C5KKe6: ヘッダ V3 RSA/SHA256 Signature, key ID 0608b895: NOKEY
+準備中...                ########################################### [100%]
+   1:epel-release           ########################################### [100%]
+#+END_SRC

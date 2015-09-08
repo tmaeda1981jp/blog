@@ -1,0 +1,11 @@
+#+LAYOUT: post
+#+TITLE: org-meta*系のショートカット
+#+DATE: 2014-11-15
+#+TAGS: org-mode
+
+忘れたら =M-x org-meta= でいいのだけれど，それすら忘れるのでメモ．
+
+| 見出しのレベルを増やす     | org-metaright   | C-c C-x r |
+| 見出しのレベルを減らす     | org-metaleft    | C-c C-x l |
+| 同レベルの見出しを追加する | org-meta-return | C-c C-x m |
+

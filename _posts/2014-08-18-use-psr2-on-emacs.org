@@ -1,0 +1,35 @@
+#+LAYOUT: post
+#+TITLE: php-modeでPSR-2準拠でコーディングできるようにする
+#+DATE: 2014-08-18
+#+TAGS: php emacs flycheck
+
+* =PHP_CodeSniffer= のインストール
+
+#+BEGIN_SRC bash
+$ sudo pear install PHP_CodeSniffer
+$ phpcs -i
+The installed coding standards are MySource, PEAR, PHPCS, PSR1, PSR2, Squiz and Zend
+#+END_SRC
+
+* flycheckの設定
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'php-mode-hook
+          (lambda ()
+            (setq flycheck-phpcs-standard "PSR2")
+:
+#+END_SRC
+
+
+* indentの設定
+
+=(require 'php-mode)= の前に書けばいい？
+
+- https://github.com/ejmr/php-mode/issues/155
+
+#+BEGIN_SRC emacs-lisp
+(setq php-mode-coding-style (quote psr2))
+(require 'php-mode)
+#+END_SRC
+
+とりあえず上記の設定でflycheckの結果 = =phpcs xxx.php --standard=psr2= の結果と合致するようになったし，インデントも綺麗にできるようになった．

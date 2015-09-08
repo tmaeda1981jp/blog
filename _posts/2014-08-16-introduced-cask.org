@@ -1,0 +1,49 @@
+#+LAYOUT: post
+#+TITLE: package.elをやめてCaskを導入してみた
+#+DATE: 2014-08-16
+#+TAGS: emacs cask
+
+巷で噂のcaskを導入してみた．以下導入手順の備忘録．
+
+* 1. caskのインストール
+
+macだと =brew install cask= で良いらしいのだけれど，新しくemacsをインストールしようとした（おそらくemacsをbrewでinstallしていないから）ので，中断して以下のコマンドでインストール．
+
+#+BEGIN_SRC bash
+$ curl -fsSkL https://raw.github.com/cask/cask/master/go | python
+#+END_SRC
+
+インストール後は =~/.cask/bin= にパスを通す．
+
+#+BEGIN_SRC bash
+export PATH=$HOME/.cask/bin:$PATH
+#+END_SRC
+
+
+* 2. Caskファイルを作る
+
+=source= に =gnu=, =mepla=, =marmalade=, =org= を追加
+以前の =elpa= ディレクトリの中身を見ながら，Caskファイルを作っていく．
+こんな感じ．
+
+- https://github.com/tmaeda1981jp/dotfiles/blob/master/emacs/Cask
+
+最新版のorg-modeが上手くインストールできなくて少しだけ嵌ったけれど，以下の書き方でうまくいった．
+
+#+BEGIN_SRC emacs-lisp
+(source org)
+(depends-on "org-plus-contrib")
+#+END_SRC
+
+* 3. cask install
+
+Caskファイルがある場所で =cask install= (=cask= だけでもOK)
+
+* 4. init.elにcaskの読込処理を追記
+
+#+BEGIN_SRC emacs-lisp
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+#+END_SRC
+
+この手順でとりあえず今まで通りに動いているっぽい．org-modeを最新版にしたせいなのか，随分とorg-modeがカラフルで見易くなった気がする．

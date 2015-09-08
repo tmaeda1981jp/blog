@@ -1,0 +1,16 @@
+#+LAYOUT: post
+#+TITLE: XCodeでCould not insert new action connectionが出た場合の対処
+#+DATE: 2015-01-03
+#+TAGS: xcode
+
+Xcodeのstoryboardを使っていてら出てきた．下記の手順を実行することで再現しなくなった．
+
+1. Projectをclose
+2. =~/Library/Developer/Xcode/DerivedData/(project)= を削除
+3. restart
+
+[[https://github.com/kattrali/deriveddata-exterminator][deriveddata-exterminator]]というものもあるらしいので今度試す．
+
+* 参考
+
+- http://stackoverflow.com/questions/15288773/could-not-insert-new-outlet-connection

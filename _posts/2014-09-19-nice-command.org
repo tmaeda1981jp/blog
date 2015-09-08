@@ -1,0 +1,13 @@
+#+LAYOUT: post
+#+TITLE: niceコマンド
+#+DATE: 2014-09-19
+#+TAGS: unix
+
+niceコマンドをおしえてもらった．
+こんな感じで使うのだそうで，タスクに優先度を割り当てることができる．
+
+#+BEGIN_SRC bash
+$ nice -n 19 svn up
+#+END_SRC
+
+サンプルが =svn= で今更感があるけれど，最近またお仕事で使っていたりする．

@@ -1,0 +1,38 @@
+#+LAYOUT: post
+#+TITLE: Exuberant Ctagsを使ってみた
+#+DATE: 2014-12-25
+#+TAGS: ctags
+
+ものすごく今更な感はあるのだけれど， =Exuberant Ctags= を導入してみたので備忘録．
+
+- http://ctags.sourceforge.net/
+
+* Install
+
+Macにはデフォルトでctagsがインストールされているのだけれど，これは =Exuberant Ctags= じゃないそうなので，homebrewでインストール．
+
+#+BEGIN_SRC bash
+$ brew install ctags
+#+END_SRC
+
+=/usr/local/bin= 配下にインストールされるので，人によっては =PATH= の設定が必要かもしれない．
+
+* Usage
+
+自分は普段emacsを使っているので，emacs用にTAGファイルを作る．emacs用にタグを作るには， =e= オプションをつけるとよい．任意のディレクトリで下記のコマンドを実行するだけ．RはRecursiveのR．
+
+#+BEGIN_SRC bash
+$ ctags -Re
+#+END_SRC
+
+* Emacsから使ってみる
+
+=helm-etags-select= を使うのが簡単だった．適当な変数名や関数名にカーソルが当たっていればその定義元にジャンプするし，何もないところで実行すればタグの一覧をhelm風インターフェースで参照することができる．
+元々は =C-x c e= が割り当てられていたけれど，頻繁に使いそうだったので， =M-.= に割り当ててみた．元のバッファに戻りたい場合は =pop-tag-mark= を使うのだけれど，これを =M-,(comma)= に割り当ててみた．
+
+#+BEGIN_SRC elisp
+(global-set-key (kbd "M-.") 'helm-etags-select)
+(global-set-key (kbd "M-,") 'pop-tag-mark)
+#+END_SRC
+
+TAGSファイルを毎回作るのは面倒くさそう．保存したら自動的に生成するなどの仕組みも探せばありそうだし，なくてもそれ程難しくなく作れそうなので，その辺りも追々やることにする．

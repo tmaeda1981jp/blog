@@ -1,0 +1,25 @@
+#+TITLE: EmacsでCarriage Return 一括置換
+#+DATE: 2014-07-29
+#+TAGS: emacs lisp
+#+LAYOUT: post
+
+* 改行コードの一括置換
+
+僕の周りでは最近改行コードはLFで統一されていることが多いのだけれど，Windows環境の人と一緒に開発をしていると極稀にCRLFが混ざってしまうようなことがある．\\
+\\
+こういう時にいつも =M-x replace-regexp C-q C-M C-q C-j= とかやっていたのだけれど，いいかげん面倒くさかったのとelispの練習にちょうどよさそうだったのでコマンド一発で置換できるようにした．\\
+
+#+BEGIN_SRC emacs-lisp
+(defun remove-all-cr ()
+  "Remove all carriage return."
+  (interactive)
+    (save-excursion
+      (beginning-of-buffer)
+      (while (re-search-forward "^M" nil t)
+        (replace-match "
+"))))
+
+(global-set-key (kbd "C-x w") 'remove-all-cr)
+#+END_SRC
+
+最後の =replace-match= のあたり， =C-q C-j= で入力すると普通に改行されてしまってちょっとだけ嫌な感じ><

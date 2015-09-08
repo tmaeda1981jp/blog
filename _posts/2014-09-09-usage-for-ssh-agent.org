@@ -1,0 +1,21 @@
+#+LAYOUT: post
+#+TITLE: ssh鍵のパスフレーズを入力せずにリモートのgitリポジトリにアクセスする
+#+DATE: 2014-09-09
+#+TAGS: ssh
+
+昔一度やったきりで忘れていたので備忘録．
+
+* ssh-agentの起動
+
+#+BEGIN_SRC bash
+$ ssh-agent zsh
+#+END_SRC
+
+* 秘密鍵を登録する
+
+#+BEGIN_SRC bash
+$ ssh-add ~/.ssh/id_rsa
+#+END_SRC
+
+ここでパスフレーズを入力する．
+ここまでやっておくと，git push/pullのタイミングでパスフレーズを聞かれずに済む．

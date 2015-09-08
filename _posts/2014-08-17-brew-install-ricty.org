@@ -1,0 +1,9 @@
+#+LAYOUT: post
+#+TITLE: homebrewでRictyをインストールする
+#+DATE: 2014-08-17
+#+TAGS: homebrew mac
+
+#+BEGIN_SRC bash
+$ brew tap senamet/font
+$ brew install ricty
+#+END_SRC

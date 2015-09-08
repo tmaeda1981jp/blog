@@ -1,0 +1,58 @@
+#+LAYOUT: post
+#+TITLE: ace-jump-modeの設定をした
+#+DATE: 2014-09-29
+#+TAGS: mac emacs
+
+=ace-jump-mode= は簡単にいうととても短いキーストロークで目的の単語や文字まで移動できるという拡張．
+
+- https://github.com/winterTTr/ace-jump-mode
+
+便利そうだったので設定してみたのだけれど，かなり手間取ってしまったので備忘録としてメモ．
+こちらのblogの設定を真似したかった．
+
+- http://d.hatena.ne.jp/rkworks/20120520/1337528737
+
+** Hyperキーの設定
+
+これが一番面倒だった．
+一般的には使わなくなった CapsLockあたりを設定するようなのだけれど，愛用しているHHKBには CapsLockがない．
+右Optionを割り当てたかったのだけれど，MacのTerminalは右か左かなんていう区別はしてくれないらしい．
+=iTerm2= を使うことでそのあたりの設定は細かくできるらしいのだけれど，Visor風の設定が自分の好みな感じはちょっと違っていて =TotalTerminal= を使い続けたかったので，OSレベルで違うキーとして割り当てるということにした．
+使ったのは =Seil= というソフト．
+
+- https://pqrs.org/osx/karabiner/seil.html.ja
+
+=Change Option_R= をF8に割り当てる．
+
+[[file:../../../img/seil.png]]
+
+本当はF19やF20あたりを割り当てたかったのだけれど，MacのTerminalでは認識できないようであった．
+
+** Emacsの設定
+
+=F8= をHyperキーとして割り当てる設定として下記を追加．
+
+#+BEGIN_SRC emacs-lisp
+(define-key function-key-map (kbd "<f8>") 'event-apply-hyper-modifier)
+#+END_SRC
+
+ace-jump-modeの設定は参考にさせていただいたblogに記載の通り．
+
+#+BEGIN_SRC emacs-lisp
+(require 'ace-jump-mode)
+
+(defun add-keys-to-ace-jump-mode (prefix c &optional mode)
+  (define-key global-map
+    (read-kbd-macro (concat prefix (string c)))
+    `(lambda ()
+       (interactive)
+       (funcall (if (eq ',mode 'word)
+                    #'ace-jump-word-mode
+                  #'ace-jump-char-mode) ,c))))
+
+(loop for c from ?0 to ?9 do (add-keys-to-ace-jump-mode "H-" c))
+(loop for c from ?a to ?z do (add-keys-to-ace-jump-mode "H-" c))
+(loop for c from ?0 to ?9 do (add-keys-to-ace-jump-mode "H-M-" c 'word))
+(loop for c from ?a to ?z do (add-keys-to-ace-jump-mode "H-M-" c 'word))
+#+END_SRC
+

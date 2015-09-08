@@ -1,0 +1,133 @@
+#+LAYOUT: post
+#+TITLE: brewdlerとhomebrew caskを使ってみた
+#+DATE: 2014-11-10
+#+TAGS: brewdler homebrew homebrew-cask
+
+自宅で使用しているマシンを新調したのを契機に =brewdler= と =homebrew-cask= を導入してみた．
+
+* brewdler
+
+=brewdler= は =homebrew= でインストール可能なアプリケーションをrubyのgemfileのような形で管理できるもの． =brew bundle= というコマンドがあったらしいのだけれど，[[https://github.com/Homebrew/homebrew/issues/30815][deprecatedになってしまったらしい]]ので =brewlder= を使うことにした．
+
+
+- https://github.com/andrew/brewdler
+
+
+* homebrew-cask
+
+chromeやfirefoxなど，インターネット上からDLしてインストールするようなアプリケーションを同じくgemfileのような形で管理するための仕組み．
+
+
+- http://caskroom.io/
+
+* Install
+
+** brewdler
+
+#+BEGIN_SRC bash
+$ gem install brewdler
+#+END_SRC
+
+** homebrew-cask
+
+#+BEGIN_SRC bash
+$ brew install caskroom/cask/brew-cask
+#+END_SRC
+
+* Setting
+
+=homebrew-cask= をデフォルトの設定のまま使うと，アプリケーションは =$HOME/Applications= にインストールされてしまう．これだと都合が悪いことがある[fn:1]ので， =/Applications= にsymbolic linkを貼って置けるように =HOMCEEBREW_CASK_OPTS= に =/Applications= を指定しておく．
+
+#+BEGIN_SRC bash
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+#+END_SRC
+
+
+* Usage
+
+=brewdler= の設定も =homebrew-cask= の設定も =Brewfile= 一つにまとめて書いておくことができる．
+下記のような内容で =Brewfile= を作成し， =brewdle install= というコマンドを実行することで，記述したアプリケーションをまとめてインストールすることができる．
+
+#+BEGIN_SRC ruby
+brew 'caskroom/cask/brew-cask'
+tap 'caskroom/versions'
+tap 'homebrew/dupes'
+tap 'homebrew/php'
+
+brew 'coreutils'
+brew 'moreutils'
+brew 'findutils'
+brew 'gnu-sed --default-names'
+brew 'zsh'
+brew 'git'
+brew 'git-flow'
+brew 'tig'
+brew 'cvs'
+brew 'svn'
+brew 'wget --with-iri'
+brew 'curl'
+brew 'ack'
+brew 'autoconf'
+brew 'automake'
+brew 'gcc'
+brew 'gawk'
+brew 'openssl'
+brew 'tree'
+brew 'readline'
+brew 'ansible'
+brew 'docker'
+brew 'ant'
+brew 'maven'
+brew 'cask'
+brew 'markdown'
+brew 'sphinx'
+brew 'sqlite'
+brew 'ghc'
+brew 'mongodb'
+brew 'the_silver_searcher'
+brew 'pyenv'
+brew 'pyenv-virtualenv'
+brew 'reattach-to-user-namespace'
+brew 'zlib'
+brew 'rename'
+brew 'chrome-cli'
+brew 'editorconfig'
+brew 'imagemagick'
+brew 'graphicsmagick'
+brew 'tmux'
+brew 'z'
+brew 'rbenv'
+brew 'ruby-build'
+brew 'gettext'
+brew 'nodebrew'
+brew 'phantomjs'
+brew 'spidermonkey'
+brew 'v8'
+brew 'php56'
+brew 'composer'
+brew 'boris'
+brew 'gauche'
+brew 'cmigemo'
+
+# mac apps
+cask 'google-chrome'
+cask 'firefox-ja'
+cask 'dropbox'
+cask 'totalterminal'
+cask 'virtualbox'
+cask 'vagrant'
+cask 'skitch'
+cask 'emacs'
+cask 'adobe-creative-cloud'
+cask 'alfred'
+cask 'genymotion'
+cask 'google-japanese-ime'
+cask 'java'
+cask 'macvim-kaoriya'
+cask 'skype'
+cask 'onepassword'
+cask 'vmware-fusion6'
+cask 'seil'
+#+END_SRC
+
+[fn:1] 僕の場合は1passwordのブラウザ自動入力がうまく動かなかった．

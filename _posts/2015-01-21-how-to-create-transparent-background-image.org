@@ -1,0 +1,11 @@
+#+LAYOUT: post
+#+TITLE: プレビュー.appで透過画像を作る方法
+#+DATE: 2015-01-21
+#+TAGS: mac preview
+
+インスタントアルファという機能を使うととても簡単
+
+[[file:../../../img/instant-alpha.png]]
+
+
+透過したい部分をSHIFTキーを押しながら選択→切り取りで切り取った部分が透過になる．

@@ -1,0 +1,21 @@
+#+LAYOUT: post
+#+TITLE: svnでマージ済みのchangesetを抽出する方法
+#+DATE: 2014-11-13
+#+TAGS: svn
+
+今更ながらのsubversionネタ．あるbranchにコミットされているchangesetが別のbranchにマージ済みかどうかを調べたいことがあった．
+
+* すでにマージ済みのchangesetを抽出する方法
+
+#+BEGIN_SRC bash
+$ cd <マージ先のbranch>
+$ svn mergeinfo --show-revs merged <マージ元branchのURL>
+#+END_SRC
+
+* マージしていないchangesetを抽出する方法
+
+#+BEGIN_SRC bash
+$ cd <マージ先のbranch>
+$ svn mergeinfo --show-revs eligible <マージ元branchのURL>
+#+END_SRC
+

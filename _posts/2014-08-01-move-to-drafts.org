@@ -1,0 +1,28 @@
+#+TITLE: 投稿をドラフト扱いにする
+#+DATE: 2014-08-01
+#+TAGS: blog elisp jekyll
+#+LAYOUT: post
+
+Jekyllでは =_drafts= ディレクトリにある投稿をドラフトとして扱う．
+この機能は是非使ってみたかたので，エントリを書いている途中でそのエントリをドラフト扱いにできるようなものを作った．
+
+#+BEGIN_SRC emacs-lisp
+(easy-mmode-define-minor-mode myblog-mode
+                              "This is My Blog Mode."
+                              nil
+                              " MyBlog"
+                              '(("\C-ch" . myblog:move-to-draft)))
+
+(defun myblog:move-to-draft ()
+  "Move an article to draft"
+  (interactive)
+  (write-file (format "~/blog/jekyll/_drafts/%s" (buffer-name)))
+  (let* ((delete-target (format "~/blog/jekyll/_posts/%s" (buffer-name))))
+    (when (file-exists-p delete-target)
+      (delete-file delete-target)
+      (kill-buffer delete-target))))
+
+  :
+#+END_SRC
+
+=myblog-mode= という簡単な =minor-mode= を用意して，そのモードでのみ使用できるコマンドにしてみた．

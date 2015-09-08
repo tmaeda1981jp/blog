@@ -1,0 +1,6 @@
+#+LAYOUT: post
+#+TITLE: Emacsで重複行を削除する
+#+DATE: 2014-10-24
+#+TAGS: emacs
+
+=M-x delete-duplicate-lies= を使う．Emacs24.4以降で使えるようになった．

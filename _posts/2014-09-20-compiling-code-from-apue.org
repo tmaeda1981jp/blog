@@ -1,0 +1,57 @@
+#+LAYOUT: post
+#+TITLE: 詳解UNIXプログラミングのコードをコンパイルして動作させるまで
+#+DATE: 2014-09-20
+#+TAGS: unix compile c
+
+C言語系の知識が全然なかったのでしばらく動かし方がわからなかったのだけれど，
+[[http://unix.stackexchange.com/questions/105483/compiling-code-from-apue][ここ]] にとても丁寧な解説があった．
+ちなみに，今回はVagrantでubuntuの仮想環境を用意してそこで試した．
+Macでも動作させることができるのかもしれないのだけれど試していない．
+今回はそのあたりも含めての覚書．
+
+** ubuntu環境の構築
+
+Vagrantでサクッと用意．
+gccとlibbsd-devが必要．gccは最初から入ってたかも？
+
+#+BEGIN_SRC ruby
+$script = <<SCRIPT
+echo "alias lsa='ls -ltrA'" >> /home/vagrant/.bashrc
+echo "alias lstr='ls -ltr'" >> /home/vagrant/.bashrc
+sudo apt-get install -y gcc libbsd-dev
+SCRIPT
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "hashicorp/precise32"
+  config.vm.provision "shell", inline: $script
+end
+#+END_SRC
+
+** apue.3eのソースコードをDL
+
+http://www.apuebook.com/ からもってくる．
+ubuntuとファイル共有しておくと楽そうだったので，Vagrantfileがあるところへ．
+
+** make
+
+この手順が抜けていた．言われれば当たり前なのだけれど．．．
+ubuntu側にログインしてDLしたファイルを解凍 && make
+makeしたときに =cannot find -lbsd= がでたので，
+=libbsd-dev= をインストール．
+Vagrantfileに設定を追記して =vagrant provision= するだけ．
+
+** ソースコードをコンパイル
+
+コンパイルオプションもちゃんとつける
+
+#+BEGIN_SRC bash
+$ gcc -o myls myls.c -I apue.3e/include/ -L apue.3e/lib/ -lapue
+#+END_SRC
+
+Iがinlude，Lがlibの指定，一番最後のlはlibxxx.soのxxxを見つけてくるための設定...?このあたりあんまりわかっていないのでまた今度調べる．
+
+** 参考URL
+
+- http://unix.stackexchange.com/questions/105483/compiling-code-from-apue

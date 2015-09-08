@@ -1,0 +1,78 @@
+#+LAYOUT: post
+#+TITLE: EditorConfigを使ってみた
+#+DATE: 2014-10-28
+#+TAGS: editorconfig
+
+今仕事で参画しているプロジェクトのコーディングスタイルは，普段自分がコードを書くときの書き方とはかなり違っていて，職場と自宅でエディタの設定を書き分けていたのだけれど，これが少し面倒だなと感じていて最近ちょっとした悩みの種になっていた．今日仕事中にたまたま [[http://editorconfig.org/][EditorConfig]] というものがあるということをおしえてもらって，これを使ってみたところスッキリと問題が解決できた．
+
+* EditorConfigとは
+
+異なるエディタやIDEを使っているメンバ間で，コーディングスタイル(space/tab, indent, 改行コードなど)を簡単に共有できるような仕組み．自分の使っているエディタやIDEに拡張をインストールして使うような感じ．2014/10/28現在，EclipseやNetBeans用の拡張がまだないようだけれど，それ以外の有名どころはほぼ網羅されている．
+
+* インストール
+
+** Mac + Emacs環境での例
+
+*** 1. EditorConfig Core のインストール
+
+[[https://github.com/editorconfig/editorconfig-core-c][EditorConfig Core]] をインストールする．Macはbrewでいけた
+
+#+BEGIN_SRC bash
+$ brew install editorconfig
+#+END_SRC
+
+*** 2. エディタ用の拡張をインストール
+
+[[https://github.com/editorconfig/editorconfig-emacs][Emacs用のプラグイン]] をインストール．自分は普段Caskを使っているのでCaskファイルに以下のように書いてcask( install) コマンドを実行．Marmaladeから持ってくる．
+#+BEGIN_SRC elisp
+:
+(source marmalade)
+:
+(depends-on "editorconfig")
+:
+#+END_SRC
+
+*** 3. Emacsの設定
+
+1行書いて終わりだった．
+
+#+BEGIN_SRC elisp
+(load "editorconfig")
+#+END_SRC
+
+自分の環境では必要なかったけれど，Emacsの設定やCoreのインストールの仕方によっては以下のようにパスを通す必要があるかもしれない．
+
+#+BEGIN_SRC elisp
+(setq edconf-exec-path "/usr/local/bin/editorconfig")
+#+END_SRC
+
+* 設定ファイル
+
+[[https://github.com/twbs/bootstrap/][BootStrap]] とか[[https://github.com/jquery/jquery][jQuery]] とか有名どころで結構使われていたのでドキュメントと一緒にをさらっと眺めつつ．とりあえず自分用に直近で使いそうなのを適当にまとめてみた．
+
+#+BEGIN_SRC python
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{html,jade,js,ts,css,rb,json,yml,el,sh}]
+indent_style = space
+indent_size = 2
+
+[*.{py,java}]
+indent_style = space
+indent_size = 4
+
+[*.php]
+indent_style = tab
+tab_width = 4
+
+[*.{md,org,rst}]
+trim_trailing_whitespace = false
+#+END_SRC
+
+このファイルを =.editorconfig= という名前で保存して，任意のプロジェクトのrootディレクトリに配置．全部確認したわけではないけれど，とりあえずこれで動いてるっぽい．プロジェクトごとにコーディングスタイルが異なっていてもこのファイルを作って置いておけば面倒なエディタの設定は必要なさそうだし，メンバ間での共有も簡単にできそうでとっても便利！

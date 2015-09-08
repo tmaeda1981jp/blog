@@ -1,0 +1,20 @@
+#+TITLE: Emacsでファイル名から拡張子を除いたものを返す関数
+#+DATE: 2014-07-29
+#+TAGS: emacs elisp
+#+LAYOUT: post
+
+* 1. =file-name-sans-extension= を 使う
+
+#+BEGIN_SRC emacs-lisp
+(file-name-sans-extension "/path/to/index.html") ; => /path/to/index
+#+END_SRC
+
+* 2. =f.el= の =f-no-ext= を使う
+
+[[https://github.com/rejeep/f.el][f.el]] はファイル関連の処理をいい感じで扱いやすくしてくれるライブラリ．
+
+#+BEGIN_SRC elisp
+(require 'f)
+(f-no-ext "path/to/index.html") ; => /path/to/index
+#+END_SRC
+
