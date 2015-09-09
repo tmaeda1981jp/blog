@@ -1,3 +1,3 @@
 # my blog
 
-http://blog.smilecode.jp
+* http://blog.smilecode.jp
