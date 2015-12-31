@@ -70,5 +70,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  jekyll
+  jekyll (= 2.5.3)
   org-ruby
